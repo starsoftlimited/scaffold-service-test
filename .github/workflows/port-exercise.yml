@@ -1,5 +1,3 @@
-# This is a basic workflow that is manually triggered
-
 name: Manual Workflow
 
 # The workflow is triggered manually through the UI or API.
@@ -24,12 +22,9 @@ jobs:
 
     # Steps represent tasks that will be executed as part of the job
     steps:
-      # Step to send a greeting message and process the input JSON string
+      # Step to parse and process the input JSON string
       - name: Parse and process port payload
         run: |
           echo "Parsing JSON input..."
           # Process the input JSON string and extract the service name
           echo "${{ inputs.port_payload }}" | jq .
-        with:
-          port_payload: ${{ inputs.port_payload }}
-
