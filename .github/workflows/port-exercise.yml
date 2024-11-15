@@ -1,33 +1,35 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: Manual Workflow
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
+# The workflow is triggered manually through the UI or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
+    # Define inputs that the workflow will accept when triggered
     inputs:
       port_payload:
-        # Friendly description to be shown in the UI instead of 'name'
+        # User-friendly description displayed in the UI
         description: 'Main Port Payload'
-        # Input has to be provided for the workflow to run
+        # The input is required to run the workflow
         required: true
-        # The data type of the input
+        # Data type of the input (string in this case)
         type: string
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
+# A workflow consists of one or more jobs, which can run sequentially or in parallel.
 jobs:
-  # This workflow contains a single job called "greet"
+  # Define a job called "greet" within this workflow
   greet:
-    # The type of runner that the job will run on
+    # Specify the type of runner to be used for the job
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    # Steps represent tasks that will be executed as part of the job
     steps:
-    - name: Send greeting
-      uses: port_payload@v1
-      with:
-          port_payload: port_payload
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.port_payload.payload.properties.service_name }}"
+      # Step to send a greeting message and process the input JSON string
+      - name: Parse and process port payload
+        run: |
+          echo "Parsing JSON input..."
+          # Process the input JSON string and extract the service name
+          echo "${{ inputs.port_payload }}" | jq .
+        with:
+          port_payload: ${{ inputs.port_payload }}
+
