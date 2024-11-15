@@ -25,6 +25,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Send greeting
+      uses: port_payload@v1
       with:
           port_payload: port_payload
     # Runs a single command using the runners shell
