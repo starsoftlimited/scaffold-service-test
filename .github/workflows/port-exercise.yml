@@ -27,4 +27,4 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: echo "Hello ${{ inputs.port_payload.properties.service_name }}"
+      run: echo "Hello ${{ inputs.port_payload.payload.properties.service_name }}"
