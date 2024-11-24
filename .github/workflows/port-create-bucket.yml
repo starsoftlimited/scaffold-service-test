@@ -22,8 +22,8 @@ jobs:
       # Checkout the service's repository
       - uses: actions/checkout@v4
         with:
-          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_payload).context.entity }}"
-          path: ./scaffold-service-test
+          repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).payload.action.repo }}"
+          path: ./targetRepo
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template file
         run: |
@@ -37,10 +37,10 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
-          path: ./scaffold-service-test
+          path: ./targetRepo
           commit-message: Create new resource - ${{ inputs.name }}
-          committer:  ${{ github.actor }}
-          author: ${{ github.actor }}
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
           branch: new-resource-${{ inputs.name }}
           delete-branch: true
