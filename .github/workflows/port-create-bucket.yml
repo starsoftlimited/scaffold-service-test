@@ -22,7 +22,7 @@ jobs:
       # Checkout the service's repository
       - uses: actions/checkout@v4
         with:
-          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
+          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_payload).entity }}"
           path: ./targetRepo
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template file
@@ -59,13 +59,13 @@ jobs:
           blueprint: service
           properties: |-
             {
-              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}/blob/main/resources/"
+              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ fromJson(inputs.port_payload).entity }}/blob/main/resources/"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_context).runId }}
+          runId: ${{ fromJson(inputs.port_payload).runId }}
       - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
@@ -73,5 +73,5 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).runId }}
+          runId: ${{ fromJson(inputs.port_payload).runId }}
           logMessage: Pull request created successfully for "${{ inputs.name }}" 
