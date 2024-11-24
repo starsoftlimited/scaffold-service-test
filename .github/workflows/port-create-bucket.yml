@@ -39,7 +39,7 @@ jobs:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           path: ./scaffold-service-test
           commit-message: Create new resource - ${{ inputs.name }}
-          committer: GitHub samiruh@getport.io
+          committer:  ${{ github.actor }}
           author: ${{ github.actor }}
           signoff: false
           branch: new-resource-${{ inputs.name }}
