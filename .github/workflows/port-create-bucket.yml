@@ -22,7 +22,7 @@ jobs:
       # Checkout the service's repository
       - uses: actions/checkout@v4
         with:
-          repository: "${{ github.repository_owner }}/${{ inputs.port_payload.payload.action.repo }}"
+          repository: "${{ github.repository_owner }}/${{ inputs.port_payload.payload.action.invocationMethod.repo }}"
           path: ./targetRepo
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template file
