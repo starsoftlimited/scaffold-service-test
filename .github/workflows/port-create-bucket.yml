@@ -55,17 +55,17 @@ jobs:
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: ${{ inputs.port_payload.context.entity }}
+          identifier: ${{  fromJson(inputs.port_payload).context.entity }}
           blueprint: service
           properties: |-
             {
-              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ inputs.port_payload.context.entity }}/blob/main/resources/"
+              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{  fromJson(inputs.port_payload).context.entity }}/blob/main/resources/"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ inputs.port_payload.context.runId }}
+          runId: ${{  fromJson(inputs.port_payload).context.runId }}
       - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
@@ -73,5 +73,5 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ inputs.port_payload.context.runId }}
+          runId: ${{  fromJson(inputs.port_payload).context.runId }}
           logMessage: Pull request created successfully for "${{ inputs.name }}" 
