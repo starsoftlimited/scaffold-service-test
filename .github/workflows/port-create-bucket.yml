@@ -2,7 +2,7 @@ name: Create cloud resource
 on:
   workflow_dispatch:
     inputs:
-      port_context:
+      port_payload:
         required: true
         description: Includes the entity identifier, and the action's run id
       name:
