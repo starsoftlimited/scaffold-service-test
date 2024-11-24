@@ -22,8 +22,8 @@ jobs:
       # Checkout the service's repository
       - uses: actions/checkout@v4
         with:
-          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_payload.context).entity }}"
-          path: ./targetRepo
+          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_payload).context.entity }}"
+          path: ./scaffold-service-test
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template file
         run: |
@@ -37,7 +37,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
-          path: ./targetRepo
+          path: ./scaffold-service-test
           commit-message: Create new resource - ${{ inputs.name }}
           committer: GitHub samiruh@getport.io
           author: ${{ github.actor }}
@@ -55,17 +55,17 @@ jobs:
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: ${{ fromJson(inputs.port_payload.context).entity }}
+          identifier: ${{ fromJson(inputs.port_payload).context.entity }}
           blueprint: service
           properties: |-
             {
-              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ fromJson(inputs.port_payload.context).entity }}/blob/main/resources/"
+              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ fromJson(inputs.port_payload).context.entity }}/blob/main/resources/"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload.context).runId }}
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
       - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
@@ -73,5 +73,5 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload.context).runId }}
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: Pull request created successfully for "${{ inputs.name }}" 
