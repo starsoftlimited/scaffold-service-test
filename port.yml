@@ -1,0 +1,9 @@
+# enrichService.yml
+
+- identifier: "scaffold-service-test"
+  blueprint: service
+  properties:
+    type: "null"
+    lifecycle: "null"
+  relations:
+    domain: "payment"
