@@ -1,31 +1,25 @@
 name: Manual Workflow
 
-# The workflow is triggered manually through the UI or API.
 on:
   workflow_dispatch:
-    # Define inputs that the workflow will accept when triggered
     inputs:
       port_payload:
-        # User-friendly description displayed in the UI
         description: 'Main Port Payload'
-        # The input is required to run the workflow
         required: true
-        # Data type of the input (string in this case)
         type: string
-# A workflow consists of one or more jobs, which can run sequentially or in parallel.
+
 jobs:
-  # Define a job called "greet" within this workflow
-  greet:
-    # Specify the type of runner to be used for the job
+  process-json:
     runs-on: ubuntu-latest
 
-    # Steps represent tasks that will be executed as part of the job
     steps:
-      # Step to parse and process the input JSON string
       - name: Parse and process port payload
         run: |
           echo "Parsing JSON input..."
-          # Process the input JSON string and extract the service name
-          JSON_STRING= ${{ inputs.port_payload.payload.properties.pull_request }}
-          echo "$JSON_STRING"
-          echo "$JSON_STRING" | jq -r '.[] | "Object: \n\(. | to_entries | .[] | "  \(.key): \(.value)")"'
+          # Access the input variable
+          JSON_STRING='${{ github.event.inputs.port_payload }}'
+          
+          echo "Input JSON String: $JSON_STRING"
+
+          # Process the JSON string
+          echo "$JSON_STRING" | jq -r '.payload.properties.pull_request | "Object: \n\(. | to_entries | .[] | "  \(.key): \(.value)")"'
