@@ -5,6 +5,10 @@ on:
       port_context:
         required: true
         description: Includes the entity identifier and the action's run id
+      pullRequest:
+        required: true
+        description: The domain to assign the service to
+        type: string
       domain:
         required: true
         description: The domain to assign the service to
@@ -61,4 +65,4 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
-          logMessage: Pull request to add port.yml created successfully for service "${{ fromJson(inputs.port_context).entity }}" 🚀
+          logMessage:  Pull request to add port.yml created successfully "${{ fromJson(inputs.pullRequest) }}" for service "${{ fromJson(inputs.port_context).entity }}" 🚀
