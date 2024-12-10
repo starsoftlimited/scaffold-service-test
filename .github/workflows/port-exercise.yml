@@ -12,13 +12,6 @@ on:
         required: true
         # Data type of the input (string in this case)
         type: string
-      pullRequest:
-        # User-friendly description displayed in the UI
-        description: 'Main Port Payload'
-        # The input is required to run the workflow
-        required: true
-        # Data type of the input (string in this case)
-        type: string
 # A workflow consists of one or more jobs, which can run sequentially or in parallel.
 jobs:
   # Define a job called "greet" within this workflow
@@ -33,4 +26,4 @@ jobs:
         run: |
           echo "Parsing JSON input..."
           # Process the input JSON string and extract the service name
-          echo "${{ inputs.pullRequest }}" | jq .
+          echo "${{ inputs.port_payload}}" | jq .
