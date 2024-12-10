@@ -27,4 +27,4 @@ jobs:
           echo "Parsing JSON input..."
           # Process the input JSON string and extract the service name
           JSON_STRING= ${{ inputs.port_payload.payload.properties.pull_request }}
-          echo "$JSON_STRING" | jq -r 'to_entries | .[] | "\(.key): \(.value)"'" | jq .
+          echo "$JSON_STRING" | jq -r '.[] | "Object: \n\(. | to_entries | .[] | "  \(.key): \(.value)")"'
