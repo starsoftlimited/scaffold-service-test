@@ -26,4 +26,4 @@ jobs:
         run: |
           echo "Parsing JSON input..."
           # Process the input JSON string and extract the service name
-          echo "${{ fromJson(inputs.port_payload.payload.properties.pull_request) }}" | jq .
+          echo "${{ inputs.port_payload.payload.properties.pull_request }}" | jq .
