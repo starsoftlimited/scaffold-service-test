@@ -22,4 +22,4 @@ jobs:
           echo "Input JSON String: $JSON_STRING"
 
           # Process the JSON string
-          echo "$JSON_STRING" | jq -r '.payload.properties.pull_request | "Object: \n\(. | to_entries | .[] | "  \(.key): \(.value)")"'
+          #echo "$JSON_STRING" | jq -r '.payload.properties.pull_request | "Object: \n\(. | to_entries | .[] | "  \(.key): \(.value)")"'
