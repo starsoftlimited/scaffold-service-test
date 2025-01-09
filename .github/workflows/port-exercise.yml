@@ -23,3 +23,45 @@ jobs:
 
           # Process the JSON string
           #echo "$JSON_STRING" | jq -r '.payload.properties.pull_request | "Object: \n\(. | to_entries | .[] | "  \(.key): \(.value)")"'
+      # Step 3: Simulate some action (e.g., build, test, etc.)
+      - name: Simulate action (e.g., build, test, etc.)
+        run: |
+          echo "Running some custom actions..."
+          sleep 3  # simulate some processing time
+          echo "Action completed successfully!"
+     # Step 4: Update status and summary in Port using port-github-action
+      - name: Set status and summary in Port
+        uses: port-labs/port-github-action@v1
+        with:
+          port_api_url: ${{ secrets.PORT_API_URL }}  # Port API URL (Set in GitHub Secrets)
+          api_key: ${{ secrets.PORT_API_KEY }}      # Port API Key (Set in GitHub Secrets)
+          action_run_id: ${{ github.run_id }}       # GitHub Actions run ID
+          status: "Running"                         # Status of the action run
+          summary: ${{ github.event.inputs.summary }}  # Custom summary input
+     # Step 5: Log workflow completion message to Port
+      - name: Log completion message to Port
+        uses: port-labs/port-github-action@v1
+        with:
+          port_api_url: ${{ secrets.PORT_API_URL }}  # Port API URL (Set in GitHub Secrets)
+          api_key: ${{ secrets.PORT_API_KEY }}      # Port API Key (Set in GitHub Secrets)
+          action_run_id: ${{ github.run_id }}       # GitHub Actions run ID
+          message: "Workflow has finished successfully!"  # Log completion message
+      # Step 6: Provide final summary with the link (e.g., Google URL)
+      - name: Provide summary with link in Port
+        uses: port-labs/port-github-action@v1
+        with:
+          port_api_url: ${{ secrets.PORT_API_URL }}  # Port API URL (Set in GitHub Secrets)
+          api_key: ${{ secrets.PORT_API_KEY }}      # Port API Key (Set in GitHub Secrets)
+          action_run_id: ${{ github.run_id }}       # GitHub Actions run ID
+          summary: "Workflow completed successfully!"  # Final summary
+          link: ${{ github.event.inputs.link }}     # URL to include (e.g., Google URL)
+      # Step 7: Optionally: Final status update
+      - name: Final Status Update in Port
+        uses: port-labs/port-github-action@v1
+        with:
+          port_api_url: ${{ secrets.PORT_API_URL }}  # Port API URL (Set in GitHub Secrets)
+          api_key: ${{ secrets.PORT_API_KEY }}      # Port API Key (Set in GitHub Secrets)
+          action_run_id: ${{ github.run_id }}       # GitHub Actions run ID
+          status: "Success"                         # Final status
+          summary: "This workflow was triggered and completed successfully."
+          link: "https://www.google.com"            # Link to be included
