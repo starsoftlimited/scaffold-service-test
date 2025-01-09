@@ -38,7 +38,7 @@ jobs:
           baseUrl: https://api.getport.io    # Port API Key (Set in GitHub Secrets)
           runId: ${{  fromJson(inputs.port_payload).context.runId }}
           logMessage: Pull request created successfully for "${{ inputs.name }}" 
-          status: "Success"                         # Final status
+          status: "SUCCESS"                         # Final status
           summary: "This workflow was triggered and completed successfully."
           link: "https://www.google.com"            # Link to be included
           operation: PATCH_RUN
