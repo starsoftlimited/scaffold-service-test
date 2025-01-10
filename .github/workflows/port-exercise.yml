@@ -40,5 +40,5 @@ jobs:
           logMessage: Pull request created successfully for  https://www.google.com "${{ inputs.name }}" 
           status: "SUCCESS"                         # Final status
           summary: "This workflow was triggered and completed successfully https://www.google.com."
-          link: "[\"https://google.com\", \"https://yahoo.com\"]"
+          link: "[\"https://google.com\", \"https://yahoo.com\", \"https://google.com\", \"https://yahoo.com\"]"
           operation: PATCH_RUN
