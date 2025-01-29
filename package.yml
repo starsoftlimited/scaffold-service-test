@@ -20,3 +20,4 @@ managed_services:
           - container_name: "Container4"
             partition_key: "/partition_key"
             other_properties: "Other properties"
+            
