@@ -1,7 +1,7 @@
 apiVersion: v0.1
 identifier: example
 title: Example
-blueprint: Microservice
+blueprint: microservice
 properties: 
   owner: port-labs
   runtime: NodeJs
