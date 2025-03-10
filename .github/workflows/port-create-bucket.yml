@@ -81,7 +81,7 @@ jobs:
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: org/repo-name
+          identifier: org2/repo
           blueprint: database
           properties: |-
             {
