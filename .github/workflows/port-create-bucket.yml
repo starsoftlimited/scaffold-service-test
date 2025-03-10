@@ -33,12 +33,21 @@ jobs:
         run: |
           sed -i 's/{{ bucket_name }}/${{ inputs.name }}/' ./targetRepo/resources/${{ inputs.name }}.tf
           sed -i 's/{{ bucket_acl }}/${{ inputs.visibility }}/' ./targetRepo/resources/${{ inputs.name }}.tf
+      - name: Update new file data
+        run: |
+          access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+            "clientId": "${{ secrets.PORT_CLIENT_ID }}",
+            "clientSecret": "${{ secrets.PORT_CLIENT_SECRET }}"
+          }' | jq -r '.accessToken')
+          echo "ACCESS_TOKEN=$access_token" >> $GITHUB_ENV
       - name: Open a pull request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           path: ./targetRepo
-          identifier: org%2Frepo-name
+          identifier: test_1
           commit-message: Create new resource - ${{ inputs.name }}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
@@ -53,6 +62,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: createResource
     steps:
+      - name: Manually encode identifier
+        run: echo "ENCODED_IDENTIFIER=$(echo -n 'org/repo-name' | jq -sRr @uri)" >> $GITHUB_ENV
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
@@ -70,7 +81,7 @@ jobs:
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: '"org%2Frepo-name"'
+          identifier: ${{ env.ENCODED_IDENTIFIER }}
           blueprint: database
           properties: |-
             {
