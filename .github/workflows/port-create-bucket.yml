@@ -81,7 +81,7 @@ jobs:
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: ${{ env.ENCODED_IDENTIFIER }}
+          identifier: test_1
           blueprint: database
           properties: |-
             {
@@ -100,4 +100,4 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{  fromJson(inputs.port_payload).context.runId }}
-          logMessage: Pull request created successfully for "${{ inputs.name }}" 
+          logMessage:  Pull request created successfully for "${{ inputs.name }}" "${{env.ENCODED_IDENTIFIER}}"
