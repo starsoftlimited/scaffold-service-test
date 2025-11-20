@@ -1,0 +1,32 @@
+identifier: foo-fe-1
+description: foo description
+qos: maintenance
+tier: 1
+product_manager: foo-pm
+exec_sponsor: foo-exec-sponsor
+managers_of_owning_teams:
+- foo-team
+name: foo-fe
+links:
+- description: This Playbook helps to decide when to status
+  kind: playbook
+  name: Foo-Fe Availability Playbook
+  source: https://github.com/github/ownership/blob/a4d7f80a552f8e740596906824262271e502ba53/github/github/foo-fe/ownership.yaml
+    via ownership_load
+  url: https://ops.githubapp.com/docs/playbooks/foo-fe/availability-dotcom.md
+- description: Primary Foo-Fe Dashboard
+  kind: dashboard
+  name: Foo-Fe DataDog Dashboard
+  source: https://github.com/github/ownership/blob/a4d7f80a552f8e740596906824262271e502ba53/github/github/foo-fe/ownership.yaml
+    via ownership_load
+  url: https://app.datadoghq.com/dashboard/abc-def-ghi/foo-fe-dashboard
+support_escalations:
+- level: sev1
+  tta: 5 mins
+  pagerduty: foo-id
+- level: sev2
+  tta: 1 business day
+  github_issues: https://github.com/github/foo-fe/issues
+- level: sev3
+  slack_alert: foo-fe-ops
+  slack: foo-fe
